@@ -14,4 +14,4 @@ goto :start
 set metadata_dir=%DIR%\my-fdroid-repo\metadata
 set log_file=%DIR%\test.log
 
-call :translate-fdroid-metadata-text-files -i "en" -o "de" -o "es" -o "fr" -o "zh" -o "zh-TW" -d "%metadata_dir%" >"%log_file%" 2>&1
+call :translate-fdroid-metadata-text-files -i "en" -o "de" -o "es" -o "fr" -o "zh" -o "zh-TW" -d "%metadata_dir%" -c "icon.png" >"%log_file%" 2>&1

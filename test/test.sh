@@ -12,4 +12,4 @@ function translate-fdroid-metadata-text-files {
 metadata_dir="${DIR}/my-fdroid-repo/metadata"
 log_file="${DIR}/test.log"
 
-translate-fdroid-metadata-text-files -i 'en' -o 'de' -o 'es' -o 'fr' -o 'zh' -o 'zh-TW' -d "$metadata_dir" >"$log_file" 2>&1
+translate-fdroid-metadata-text-files -i 'en' -o 'de' -o 'es' -o 'fr' -o 'zh' -o 'zh-TW' -d "$metadata_dir" -c 'icon.png' >"$log_file" 2>&1

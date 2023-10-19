@@ -45,14 +45,20 @@ options:
 
 "-o" <language>
 "--output-language" <language>
-    [optional] Language code for output file.
-    note: This flag can be repeated to produce multiple output files.
+    [optional] Language code for output locale directory.
+    note: This flag can be repeated to output multiple locales.
     note: Input language is ignored.
-    Default: Produce output files for all languages.
+    Default: Produce output for all supported language codes.
 
 "-d" <dirpath>
 "--metadata-directory" <dirpath>
     [required] Directory path to F-Droid metadata.
+
+"-c" <filename>
+"--copy-file" <filename>
+    [optional] File name of a non-translated asset to copy
+    from the input locale directory to all output locale directories.
+    note: This flag can be repeated to copy multiple files.
 
 language codes:
 ===============
@@ -152,7 +158,7 @@ language codes:
 ```bash
   source ~/IBM_TRANSLATOR_API_CREDENTIALS.sh
 
-  translate-fdroid-metadata-text-files -i 'en' -d '/path/to/my-fdroid-repo/metadata'
+  translate-fdroid-metadata-text-files -i 'en' -d '/path/to/my-fdroid-repo/metadata' -c 'icon.png'
 ```
 
 #### Legal:

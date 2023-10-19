@@ -9,7 +9,8 @@ const argv_flags = {
   "--api-url":            {},
   "--input-language":     {enum: lang_codes},
   "--output-language":    {enum: lang_codes, many: true},
-  "--metadata-directory": {file: "path-dirname-exists"}
+  "--metadata-directory": {file: "path-dirname-exists"},
+  "--copy-file":          {many: true}
 }
 
 const argv_flag_aliases = {
@@ -19,7 +20,8 @@ const argv_flag_aliases = {
   "--api-url":            ["-u"],
   "--input-language":     ["-i"],
   "--output-language":    ["-o"],
-  "--metadata-directory": ["-d"]
+  "--metadata-directory": ["-d"],
+  "--copy-file":          ["-c"]
 }
 
 let argv_vals = {}
