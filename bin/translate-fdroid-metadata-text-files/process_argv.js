@@ -10,7 +10,8 @@ const argv_flags = {
   "--input-language":     {enum: lang_codes},
   "--output-language":    {enum: lang_codes, many: true},
   "--metadata-directory": {file: "path-dirname-exists"},
-  "--copy-file":          {many: true}
+  "--copy-file":          {many: true},
+  "--force-overwrite":    {bool: true}
 }
 
 const argv_flag_aliases = {
@@ -21,7 +22,8 @@ const argv_flag_aliases = {
   "--input-language":     ["-i"],
   "--output-language":    ["-o"],
   "--metadata-directory": ["-d"],
-  "--copy-file":          ["-c"]
+  "--copy-file":          ["-c"],
+  "--force-overwrite":    ["-f"]
 }
 
 let argv_vals = {}

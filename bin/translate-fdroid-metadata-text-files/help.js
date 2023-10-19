@@ -42,6 +42,12 @@ options:
     from the input locale directory to all output locale directories.
     note: This flag can be repeated to copy multiple files.
 
+"-f"
+"--force-overwrite"
+    [optional] Boolean flag to force the overwriting
+    of files that already exist in output locale directories.
+    Default: Pre-existing files are not modified.
+
 language codes:
 ===============
   "ar"    Arabic
