@@ -50,13 +50,20 @@ options:
 
 "-p" <filepath>
 "--plugin" <filepath>
-  [optional] File path to a custom post-processor plugin.
+  [optional] File path to a custom plugin.
   Note: This flag can be repeated to chain multiple plugins.
 
+"--html-entities"
+  [optional] Boolean flag to apply an embedded pre-processor plugin,
+  which converts limited markdown to html entities in "description.txt"
+  for the input locale before translation.
+  Note: This plugin is applied before all other plugins.
+
 "--marked"
-  [optional] Boolean flag to apply an embedded plugin,
-  which converts markdown to html in files: "description.txt"
-  Note: This plugin is applied before any custom plugins.
+  [optional] Boolean flag to apply an embedded post-processor plugin,
+  which converts markdown to html in "description.txt"
+  for all locales after translation.
+  Note: This plugin is applied before custom post-processor plugins.
 
 language codes:
 ===============

@@ -68,13 +68,20 @@ options:
 
 "-p" <filepath>
 "--plugin" <filepath>
-  [optional] File path to a custom post-processor plugin.
+  [optional] File path to a custom plugin.
   Note: This flag can be repeated to chain multiple plugins.
 
+"--html-entities"
+  [optional] Boolean flag to apply an embedded pre-processor plugin,
+  which converts limited markdown to html entities in "description.txt"
+  for the input locale before translation.
+  Note: This plugin is applied before all other plugins.
+
 "--marked"
-  [optional] Boolean flag to apply an embedded plugin,
-  which converts markdown to html in files: "description.txt"
-  Note: This plugin is applied before any custom plugins.
+  [optional] Boolean flag to apply an embedded post-processor plugin,
+  which converts markdown to html in "description.txt"
+  for all locales after translation.
+  Note: This plugin is applied before custom post-processor plugins.
 
 language codes:
 ===============
@@ -182,9 +189,31 @@ language codes:
 * each plugin is a CommonJS module that exports a single function
 * the signature of this function is:
   ```javascript
-    (file_name, file_content) => (updated_file_content)
+    (processing_stage, file_name, file_content) => (updated_file_content)
   ```
-* for an example, please refer to the [embedded `marked` plugin](./plugins/marked/index.js)
+* for examples, please refer to the embedded plugins:
+  - [`--html-entities`](./plugins/html-entities/index.js)
+  - [`--marked`](./plugins/marked/index.js)
+
+#### Embedded Plugins:
+
+`--html-entities` encodes the following:
+
+* leading whitespace
+  - indentation is preserved
+* markdown list syntax
+  - "*" is replaced by a unicode black circle
+  - "-" is replaced by a unicode white circle
+  - ordered list numbering is preserved
+  - when possible, list items are wrapped and indented;
+    so each line contains a maximum of 45 characters
+
+comparison of test results:
+
+* HTML entities and unicode characters __are__ rendered correctly by f-droid clients
+  - as produced by: `--html-entities`
+* HTML tags __are NOT__ rendered correctly by f-droid clients,<br>and look really bad
+  - as produced by: `--marked`
 
 #### Legal:
 

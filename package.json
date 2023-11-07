@@ -1,6 +1,6 @@
 {
   "name": "@warren-bank/translate-fdroid-metadata-text-files",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "main": "lib/process_cli.js",
   "description": "Command-line utility to use the IBM Watson Language Translator service to translate F-Droid metadata text files.",
   "license": "GPL-2.0",

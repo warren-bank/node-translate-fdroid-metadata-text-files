@@ -13,6 +13,7 @@ const argv_flags = {
   "--copy-file":          {many: true},
   "--force-overwrite":    {bool: true},
   "--plugin":             {file: "module", many: true},
+  "--html-entities":      {bool: true},
   "--marked":             {bool: true}
 }
 
@@ -108,9 +109,15 @@ if (!Array.isArray(argv_vals["--plugin"])) {
 }
 
 if (argv_vals["--marked"]) {
-  const marked_plugin = require('../../plugins/marked')
+  const plugin = require('../../plugins/marked')
 
-  argv_vals["--plugin"].unshift(marked_plugin)
+  argv_vals["--plugin"].unshift(plugin)
+}
+
+if (argv_vals["--html-entities"]) {
+  const plugin = require('../../plugins/html-entities')
+
+  argv_vals["--plugin"].unshift(plugin)
 }
 
 module.exports = argv_vals
