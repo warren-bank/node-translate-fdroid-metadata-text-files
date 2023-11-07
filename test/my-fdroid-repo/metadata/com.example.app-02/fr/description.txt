@@ -1,1 +1,18 @@
-C'est précisément la façon dont cette application fait tout ce qu'un utilisateur pourrait vouloir dire est confidentielle, propriétaire, et si vous le demandez à nouveau, le gouvernement confisque tous vos biens et vous emprisonner vous-même, votre famille, et tous vos amis les plus proches. Appréciez !
+<strong>Precisely</strong> La façon dont cette application fait <em>tout</em> un utilisateur peut <em>ever</em> veut être:
+
+<ul>
+<li>confidentiel</li>
+<li>propriété exclusive</li>
+<li>si vous demandez à nouveau le gouvernement:<ul>
+<li>confisquer tous vos biens</li>
+<li>prison:<ul>
+<li>toi-même</li>
+<li>votre famille</li>
+<li>tous vos amis les plus proches</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+Appréciez !

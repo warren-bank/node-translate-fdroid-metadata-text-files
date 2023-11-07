@@ -1,0 +1,21 @@
+https://www.npmjs.com/package/marked
+
+https://marked.js.org/
+https://marked.js.org/using_advanced
+
+package.json:
+=============
+  "dependencies": {
+    "marked": {
+      "version": "9.1.5",
+      "resolved": "https://registry.npmjs.org/marked/-/marked-9.1.5.tgz",
+      "integrity": "sha512-14QG3shv8Kg/xc0Yh6TNkMj90wXH9mmldi5941I2OevfJ/FQAFLEwtwU2/FfgSAOMlWHrEukWSGQf8MiVYNG2A=="
+    }
+  }
+
+notes:
+======
+* the npm module weighs about 1 MB.
+* the only file that's actually needed is:
+    node_modules/marked/marked.min.js
+  which is 35 KB.

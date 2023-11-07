@@ -11,7 +11,9 @@ const argv_flags = {
   "--output-language":    {enum: lang_codes, many: true},
   "--metadata-directory": {file: "path-dirname-exists"},
   "--copy-file":          {many: true},
-  "--force-overwrite":    {bool: true}
+  "--force-overwrite":    {bool: true},
+  "--plugin":             {file: "module", many: true},
+  "--marked":             {bool: true}
 }
 
 const argv_flag_aliases = {
@@ -23,7 +25,8 @@ const argv_flag_aliases = {
   "--output-language":    ["-o"],
   "--metadata-directory": ["-d"],
   "--copy-file":          ["-c"],
-  "--force-overwrite":    ["-f"]
+  "--force-overwrite":    ["-f"],
+  "--plugin":             ["-p"]
 }
 
 let argv_vals = {}
@@ -98,6 +101,16 @@ if (!argv_vals["--output-language"] || !argv_vals["--output-language"].length) {
 if (!argv_vals["--metadata-directory"]) {
   console.log('ERROR: Path to metadata directory is required')
   process.exit(1)
+}
+
+if (!Array.isArray(argv_vals["--plugin"])) {
+  argv_vals["--plugin"] = []
+}
+
+if (argv_vals["--marked"]) {
+  const marked_plugin = require('../../plugins/marked')
+
+  argv_vals["--plugin"].unshift(marked_plugin)
 }
 
 module.exports = argv_vals

@@ -46,8 +46,8 @@ options:
 "-o" <language>
 "--output-language" <language>
     [optional] Language code for output locale directory.
-    note: This flag can be repeated to output multiple locales.
-    note: Input language is ignored.
+    Note: This flag can be repeated to output multiple locales.
+    Note: Input language is ignored.
     Default: Produce output for all supported language codes.
 
 "-d" <dirpath>
@@ -58,13 +58,23 @@ options:
 "--copy-file" <filename>
     [optional] File name of a non-translated asset to copy
     from the input locale directory to all output locale directories.
-    note: This flag can be repeated to copy multiple files.
+    Note: This flag can be repeated to copy multiple files.
 
 "-f"
 "--force-overwrite"
     [optional] Boolean flag to force the overwriting
     of files that already exist in output locale directories.
     Default: Pre-existing files are not modified.
+
+"-p" <filepath>
+"--plugin" <filepath>
+  [optional] File path to a custom post-processor plugin.
+  Note: This flag can be repeated to chain multiple plugins.
+
+"--marked"
+  [optional] Boolean flag to apply an embedded plugin,
+  which converts markdown to html in files: "description.txt"
+  Note: This plugin is applied before any custom plugins.
 
 language codes:
 ===============
@@ -166,6 +176,15 @@ language codes:
 
   translate-fdroid-metadata-text-files -i 'en' -d '/path/to/my-fdroid-repo/metadata' -c 'icon.png'
 ```
+
+#### Plugins:
+
+* each plugin is a CommonJS module that exports a single function
+* the signature of this function is:
+  ```javascript
+    (file_name, file_content) => (updated_file_content)
+  ```
+* for an example, please refer to the [embedded `marked` plugin](./plugins/marked/index.js)
 
 #### Legal:
 
