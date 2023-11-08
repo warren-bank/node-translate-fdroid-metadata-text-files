@@ -219,7 +219,7 @@ language codes:
   - "-" is replaced by a unicode white circle
   - ordered list numbering is preserved
   - when possible, list items are wrapped and indented;
-    so each line contains a maximum of 45 characters
+    so each line contains a maximum of 40 characters
 
 comparison of test results:
 

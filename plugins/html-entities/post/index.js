@@ -8,7 +8,7 @@ const plugin = (processing_stage, file_name, translated_strings_array) => {
   }
 }
 
-const replace_with_html_entities = (translated_strings_array, max_chars_per_line = 45) => {
+const replace_with_html_entities = (translated_strings_array, max_chars_per_line = 40) => {
   let line, matches, new_lines, next_line
 
   for (let i=0; i < translated_strings_array.length; i++) {
