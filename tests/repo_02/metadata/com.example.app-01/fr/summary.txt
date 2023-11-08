@@ -1,1 +1,1 @@
-Cette application fait tout ce qu'un utilisateur pourrait vouloir.
+CHAPITRE 1: Décomposition.

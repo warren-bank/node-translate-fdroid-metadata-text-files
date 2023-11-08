@@ -72,16 +72,19 @@ options:
   Note: This flag can be repeated to chain multiple plugins.
 
 "--html-entities"
-  [optional] Boolean flag to apply an embedded pre-processor plugin,
+  [optional] Boolean flag to apply an embedded post-processor plugin,
   which converts limited markdown to html entities in "description.txt"
-  for the input locale before translation.
-  Note: This plugin is applied before all other plugins.
+  for all locales after translation.
+  Note: This plugin is applied before all post-processor plugins.
 
 "--marked"
   [optional] Boolean flag to apply an embedded post-processor plugin,
   which converts markdown to html in "description.txt"
   for all locales after translation.
   Note: This plugin is applied before custom post-processor plugins.
+
+"--debug"
+  [optional] Saves raw translation string dump files for all locales.
 
 language codes:
 ===============
@@ -189,11 +192,21 @@ language codes:
 * each plugin is a CommonJS module that exports a single function
 * the signature of this function is:
   ```javascript
-    (processing_stage, file_name, file_content) => (updated_file_content)
+    (processing_stage, file_name, strings_array) => undefined
   ```
+* where:
+  - when `processing_stage === 'pre'`
+    * `strings_array` contains all of the strings to translate in the input locale
+    * `strings_array` can be modified before it is translated
+  - when `processing_stage === 'post'`
+    * `strings_array` contains translations in an output locale
+    * `strings_array` can be modified before it is saved to file
 * for examples, please refer to the embedded plugins:
-  - [`--html-entities`](./plugins/html-entities/index.js)
-  - [`--marked`](./plugins/marked/index.js)
+  - pre-processors:
+    * [`--html-entities`](./plugins/html-entities/pre/index.js)
+  - post-processors:
+    * [`--html-entities`](./plugins/html-entities/post/index.js)
+    * [`--marked`](./plugins/marked/post/index.js)
 
 #### Embedded Plugins:
 

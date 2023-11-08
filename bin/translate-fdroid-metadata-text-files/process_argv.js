@@ -14,7 +14,8 @@ const argv_flags = {
   "--force-overwrite":    {bool: true},
   "--plugin":             {file: "module", many: true},
   "--html-entities":      {bool: true},
-  "--marked":             {bool: true}
+  "--marked":             {bool: true},
+  "--debug":              {bool: true}
 }
 
 const argv_flag_aliases = {
@@ -109,14 +110,17 @@ if (!Array.isArray(argv_vals["--plugin"])) {
 }
 
 if (argv_vals["--marked"]) {
-  const plugin = require('../../plugins/marked')
-
+  const plugin = require('../../plugins/marked/post')
   argv_vals["--plugin"].unshift(plugin)
 }
 
 if (argv_vals["--html-entities"]) {
-  const plugin = require('../../plugins/html-entities')
+  let plugin
 
+  plugin = require('../../plugins/html-entities/post')
+  argv_vals["--plugin"].unshift(plugin)
+
+  plugin = require('../../plugins/html-entities/pre')
   argv_vals["--plugin"].unshift(plugin)
 }
 

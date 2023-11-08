@@ -54,16 +54,19 @@ options:
   Note: This flag can be repeated to chain multiple plugins.
 
 "--html-entities"
-  [optional] Boolean flag to apply an embedded pre-processor plugin,
+  [optional] Boolean flag to apply an embedded post-processor plugin,
   which converts limited markdown to html entities in "description.txt"
-  for the input locale before translation.
-  Note: This plugin is applied before all other plugins.
+  for all locales after translation.
+  Note: This plugin is applied before all post-processor plugins.
 
 "--marked"
   [optional] Boolean flag to apply an embedded post-processor plugin,
   which converts markdown to html in "description.txt"
   for all locales after translation.
   Note: This plugin is applied before custom post-processor plugins.
+
+"--debug"
+  [optional] Saves raw translation string dump files for all locales.
 
 language codes:
 ===============
