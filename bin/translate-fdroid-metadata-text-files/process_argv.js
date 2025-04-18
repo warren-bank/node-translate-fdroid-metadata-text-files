@@ -1,20 +1,19 @@
 const process_argv = require('@warren-bank/node-process-argv')
 
-const lang_codes = ['ar','eu','bn','bs','bg','ca','zh','zh-TW','hr','cs','da','nl','en','et','fi','fr','fr-CA','de','el','gu','he','hi','hu','ga','id','it','ja','ko','lv','lt','ms','ml','mt','cnr','ne','nb','pl','pt','ro','ru','sr','si','sk','sl','es','sv','ta','te','th','tr','uk','ur','vi','cy']
-
 const argv_flags = {
   "--help":               {bool: true},
   "--version":            {bool: true},
   "--api-key":            {},
   "--api-url":            {},
-  "--input-language":     {enum: lang_codes},
-  "--output-language":    {enum: lang_codes, many: true},
+  "--input-language":     {},
+  "--output-language":    {many: true},
   "--metadata-directory": {file: "path-dirname-exists"},
   "--copy-file":          {many: true},
   "--force-overwrite":    {bool: true},
   "--plugin":             {file: "module", many: true},
   "--html-entities":      {bool: true},
   "--marked":             {bool: true},
+  "--no-break-on-error":  {bool: true},
   "--debug":              {bool: true}
 }
 
@@ -28,7 +27,8 @@ const argv_flag_aliases = {
   "--metadata-directory": ["-d"],
   "--copy-file":          ["-c"],
   "--force-overwrite":    ["-f"],
-  "--plugin":             ["-p"]
+  "--plugin":             ["-p"],
+  "--no-break-on-error":  ["--nb", "--no-break"]
 }
 
 let argv_vals = {}
@@ -53,17 +53,15 @@ if (argv_vals["--version"]) {
   process.exit(0)
 }
 
-argv_vals["--api-key"] = argv_vals["--api-key"] || process.env["IBM_TRANSLATOR_API_KEY"]
-argv_vals["--api-url"] = argv_vals["--api-url"] || process.env["IBM_TRANSLATOR_API_URL"]
+argv_vals["--api-key"] = argv_vals["--api-key"] || process.env["LIBRE_TRANSLATE_API_KEY"]
+argv_vals["--api-url"] = argv_vals["--api-url"] || process.env["LIBRE_TRANSLATE_API_URL"]
 
 if (!argv_vals["--api-key"]) {
-  console.log('ERROR: IBM Cloud account API key is required')
-  process.exit(1)
+  argv_vals["--api-key"] = null
 }
 
 if (!argv_vals["--api-url"]) {
-  console.log('ERROR: IBM Cloud account API URL is required')
-  process.exit(1)
+  argv_vals["--api-url"] = 'https://libretranslate.com'
 }
 
 if (!argv_vals["--input-language"]) {
@@ -72,32 +70,8 @@ if (!argv_vals["--input-language"]) {
 }
 
 if (!argv_vals["--output-language"] || !argv_vals["--output-language"].length) {
-  argv_vals["--output-language"] = lang_codes.filter(lang => (lang !== argv_vals["--input-language"]))
-}
-
-// filter restricted translation pairs
-{
-  const whitelist = {
-    "eu": ["es"],
-    "ca": ["es"]
-  }
-
-  const valid_translation_pair = (src, dst) => {
-    const invalid = (
-      (whitelist[src] && (whitelist[src].indexOf(dst) === -1)) ||
-      (whitelist[dst] && (whitelist[dst].indexOf(src) === -1))
-    )
-    return !invalid
-  }
-
-  argv_vals["--output-language"] = argv_vals["--output-language"].filter(
-    dst => valid_translation_pair(argv_vals["--input-language"], dst)
-  )
-}
-
-if (!argv_vals["--output-language"] || !argv_vals["--output-language"].length) {
-  console.log('ERROR: Language code for output file is required')
-  process.exit(1)
+  // library will populate an array of all supported output languages
+  argv_vals["--output-language"] = null
 }
 
 if (!argv_vals["--metadata-directory"]) {

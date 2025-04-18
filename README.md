@@ -1,12 +1,22 @@
 ### [translate-fdroid-metadata-text-files](https://github.com/warren-bank/node-translate-fdroid-metadata-text-files)
 
-Command-line utility to use the IBM Watson&trade; Language Translator service to translate F-Droid metadata text files.
+Command-line utility to use the [LibreTranslate&trade;](https://github.com/LibreTranslate/LibreTranslate) service to translate F-Droid metadata text files.
 
 #### Requirements:
 
-* an [IBM Cloud account](https://github.com/warren-bank/node-ibm-watson-language-translator/blob/master/.etc/docs/IBM-Cloud-account.md)
+* access to a server hosting the [LibreTranslate server API](https://github.com/LibreTranslate/LibreTranslate#mirrors)
   - API key
   - API URL
+
+#### Supported Languages
+
+* a real-time JSON array of supported language objects is returned from the [API](https://libretranslate.com/docs) endpoint: [`/languages`](https://libretranslate.com/languages)
+* [this table](https://github.com/warren-bank/node-libre-language-translator#supported-languages) summarizes its response
+  - results may vary:
+    * over time
+    * per server
+  - when the `--output-language` option is not specified:
+    * a real-time list is obtained of all supported output languages for the specified input language at the specified [LibreTranslate server API](https://github.com/LibreTranslate/LibreTranslate#mirrors)
 
 #### Installation:
 
@@ -23,48 +33,49 @@ options:
 ========
 "-h"
 "--help"
-    Print a help message describing all command-line options.
+  Print a help message describing all command-line options.
 
 "-v"
 "--version"
-    Display the version.
+  Display the version.
 
 "-k" <key>
 "--api-key" <key>
-    [optional] IBM Cloud account API key.
-    Default: Value is read from "IBM_TRANSLATOR_API_KEY" environment variable.
+  [optional] LibreTranslate server API key.
+  Fallback: Value of the "LIBRE_TRANSLATE_API_KEY" environment variable, if one exists.
 
 "-u" <url>
 "--api-url" <url>
-    [optional] IBM Cloud account API URL.
-    Default: Value is read from "IBM_TRANSLATOR_API_URL" environment variable.
+  [optional] LibreTranslate server API URL.
+  Fallback: Value of the "LIBRE_TRANSLATE_API_URL" environment variable, if one exists.
+  Default: "https://libretranslate.com"
 
 "-i" <language>
 "--input-language" <language>
-    [required] Language code for input locale directory.
+  [required] Language code for input locale directory.
 
 "-o" <language>
 "--output-language" <language>
-    [optional] Language code for output locale directory.
-    Note: This flag can be repeated to output multiple locales.
-    Note: Input language is ignored.
-    Default: Produce output for all supported language codes.
+  [optional] Language code for output locale directory.
+  Note: This flag can be repeated to output multiple locales.
+  Note: Input language is ignored.
+  Default: Produce output for all supported language codes.
 
 "-d" <dirpath>
 "--metadata-directory" <dirpath>
-    [required] Directory path to F-Droid metadata.
+  [required] Directory path to F-Droid metadata.
 
 "-c" <filename>
 "--copy-file" <filename>
-    [optional] File name of a non-translated asset to copy
-    from the input locale directory to all output locale directories.
-    Note: This flag can be repeated to copy multiple files.
+  [optional] File name of a non-translated asset to copy
+  from the input locale directory to all output locale directories.
+  Note: This flag can be repeated to copy multiple files.
 
 "-f"
 "--force-overwrite"
-    [optional] Boolean flag to force the overwriting
-    of files that already exist in output locale directories.
-    Default: Pre-existing files are not modified.
+  [optional] Boolean flag to force the overwriting
+  of files that already exist in output locale directories.
+  Default: Pre-existing files are not modified.
 
 "-p" <filepath>
 "--plugin" <filepath>
@@ -83,67 +94,15 @@ options:
   for all locales after translation.
   Note: This plugin is applied before custom post-processor plugins.
 
+"--nb"
+"--no-break"
+"--no-break-on-error"
+  [optional] When translating multiple output languages and one encounters an error,
+  print a log statement and continue processing the remaining output languages.
+  Default: Disabled. The library throws an error, and the command-line utility exits with code.
+
 "--debug"
   [optional] Saves raw translation string dump files for all locales.
-
-language codes:
-===============
-  "ar"    Arabic
-  "eu"    Basque [1]
-  "bn"    Bengali
-  "bs"    Bosnian
-  "bg"    Bulgarian
-  "ca"    Catalan [1]
-  "zh"    Chinese (Simplified)
-  "zh-TW" Chinese (Traditional)
-  "hr"    Croatian
-  "cs"    Czech
-  "da"    Danish
-  "nl"    Dutch
-  "en"    English
-  "et"    Estonian
-  "fi"    Finnish
-  "fr"    French
-  "fr-CA" French (Canadian)
-  "de"    German
-  "el"    Greek
-  "gu"    Gujarati
-  "he"    Hebrew
-  "hi"    Hindi
-  "hu"    Hungarian
-  "ga"    Irish
-  "id"    Indonesian
-  "it"    Italian
-  "ja"    Japanese
-  "ko"    Korean
-  "lv"    Latvian
-  "lt"    Lithuanian
-  "ms"    Malay
-  "ml"    Malayalam
-  "mt"    Maltese
-  "cnr"   Montenegrin
-  "ne"    Nepali
-  "nb"    Norwegian Bokmål
-  "pl"    Polish
-  "pt"    Portuguese
-  "ro"    Romanian
-  "ru"    Russian
-  "sr"    Serbian
-  "si"    Sinhala
-  "sk"    Slovak
-  "sl"    Slovenian
-  "es"    Spanish
-  "sv"    Swedish
-  "ta"    Tamil
-  "te"    Telugu
-  "th"    Thai
-  "tr"    Turkish
-  "uk"    Ukrainian
-  "ur"    Urdu
-  "vi"    Vietnamese
-  "cy"    Welsh
-
-[1] Basque and Catalan are supported only for translation to and from Spanish.
 ```
 
 #### Structure of F-Droid Metadata Directory:
@@ -182,7 +141,7 @@ language codes:
 #### Example:
 
 ```bash
-  source ~/IBM_TRANSLATOR_API_CREDENTIALS.sh
+  source ~/LIBRE_TRANSLATE_API_CREDENTIALS.sh
 
   translate-fdroid-metadata-text-files -i 'en' -d '/path/to/my-fdroid-repo/metadata' -c 'icon.png'
 ```
