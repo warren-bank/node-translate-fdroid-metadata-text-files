@@ -1,22 +1,23 @@
 ### [translate-fdroid-metadata-text-files](https://github.com/warren-bank/node-translate-fdroid-metadata-text-files)
 
-Command-line utility to use the [LibreTranslate&trade;](https://github.com/LibreTranslate/LibreTranslate) service to translate F-Droid metadata text files.
+Command-line utility to use an online language translation service to automate the localization of F-Droid metadata text files.
 
 #### Requirements:
 
-* access to a server hosting the [LibreTranslate server API](https://github.com/LibreTranslate/LibreTranslate#mirrors)
-  - API key
-  - API URL
+* access to a server hosting one of the supported language translation service APIs
+  - [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate#mirrors)
+    * API key
+    * API URL
+  - [DeepL](https://www.deepl.com/en/pro-api)
+    * API key
 
 #### Supported Languages
 
-* a real-time JSON array of supported language objects is returned from the [API](https://libretranslate.com/docs) endpoint: [`/languages`](https://libretranslate.com/languages)
-* [this table](https://github.com/warren-bank/node-libre-language-translator#supported-languages) summarizes its response
-  - results may vary:
-    * over time
-    * per server
-  - when the `--output-language` option is not specified:
-    * a real-time list is obtained of all supported output languages for the specified input language at the specified [LibreTranslate server API](https://github.com/LibreTranslate/LibreTranslate#mirrors)
+* the list of supported input and output languages depends upon the chosen API
+  - [LibreTranslate](https://github.com/warren-bank/node-libre-language-translator#supported-languages)
+    * there is no guarantee for consistency, either between server instances or over time
+    * to obtain a real-time list of supported languages from a specific server instance, directly query its `<API URL>/languages` [API](https://libretranslate.com/docs) endpoint
+  - [DeepL](https://github.com/warren-bank/node-deepl-language-translator#supported-input-languages)
 
 #### Installation:
 
@@ -39,16 +40,25 @@ options:
 "--version"
   Display the version.
 
+"-s" <service>
+"--api-service" <service>
+    [required] Name of language translation service API.
+    enum: "libre", "deepl"
+
 "-k" <key>
 "--api-key" <key>
-  [optional] LibreTranslate server API key.
-  Fallback: Value of the "LIBRE_TRANSLATE_API_KEY" environment variable, if one exists.
+    [optional] API key.
+    Fallback for "libre" service: Value of the "LIBRE_TRANSLATE_API_KEY" environment variable, if one exists.
+    Fallback for "deepl" service: Value of the "DEEPL_TRANSLATE_API_KEY" environment variable, if one exists.
 
 "-u" <url>
 "--api-url" <url>
-  [optional] LibreTranslate server API URL.
-  Fallback: Value of the "LIBRE_TRANSLATE_API_URL" environment variable, if one exists.
-  Default: "https://libretranslate.com"
+    [optional] API URL.
+    Fallback for "libre" service: Value of the "LIBRE_TRANSLATE_API_URL" environment variable, if one exists.
+    Fallback for "deepl" service: Value of the "DEEPL_TRANSLATE_API_URL" environment variable, if one exists.
+    Default for "libre" service: "https://libretranslate.com"
+    Default for "deepl" service for free accounts: "https://api-free.deepl.com/v2"
+    Default for "deepl" service for paid accounts: "https://api.deepl.com/v2"
 
 "-i" <language>
 "--input-language" <language>
@@ -143,7 +153,7 @@ options:
 ```bash
   source ~/LIBRE_TRANSLATE_API_CREDENTIALS.sh
 
-  translate-fdroid-metadata-text-files -i 'en' -d '/path/to/my-fdroid-repo/metadata' -c 'icon.png'
+  translate-fdroid-metadata-text-files -s 'libre' -i 'en' -d '/path/to/my-fdroid-repo/metadata' -c 'icon.png'
 ```
 
 #### Plugins:
